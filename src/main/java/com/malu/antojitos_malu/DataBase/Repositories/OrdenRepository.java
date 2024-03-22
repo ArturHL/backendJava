@@ -1,4 +1,4 @@
-package com.malu.antojitos_malu.DataBase;
+package com.malu.antojitos_malu.DataBase.Repositories;
 
 import com.malu.antojitos_malu.DataBase.CRUD.OrdenCRUD;
 

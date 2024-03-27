@@ -1,20 +1,16 @@
 package com.malu.antojitos_malu.Domain.DTO;
 
-import java.util.List;
-
 public class ProductDTO {
   private int id;
 
   private String name;
-
+  
+  private int category;
+  
   private boolean available;
-
+  
   private String price;
   
-  private List<ProductImgDTO> images;
-
-  private CategoryDTO category;
-
   // Getters and Setters
   public int getId() {
     return id;
@@ -48,19 +44,12 @@ public class ProductDTO {
     this.price = price;
   }
 
-  public List<ProductImgDTO> getImages() {
-    return images;
-  }
-
-  public void setImages(List<ProductImgDTO> images) {
-    this.images = images;
-  }
-
-  public CategoryDTO getCategory() {
+  public Integer getCategory() {
     return category;
   }
 
-  public void setCategory(CategoryDTO category) {
+  public void setCategory(Integer category) {
     this.category = category;
   }
+
 }

@@ -3,11 +3,13 @@ package com.malu.antojitos_malu.Domain.DTO;
 public class OrderProductDTO {
   private int id;
 
+  private int orderId;
+
   private String comment;
 
   private int quantity;
 
-  private ProductDTO product;
+  private int productId;
 
   // Getters and Setters
 
@@ -17,6 +19,14 @@ public class OrderProductDTO {
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  public int getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(int orderId) {
+    this.orderId = orderId;
   }
 
   public String getComment() {
@@ -35,11 +45,11 @@ public class OrderProductDTO {
     this.quantity = quantity;
   }
 
-  public ProductDTO getProduct() {
-    return product;
+  public int getProductId() {
+    return productId;
   }
 
-  public void setProduct(ProductDTO product) {
-    this.product = product;
+  public void setProductId(int product) {
+    this.productId = product;
   }
 }

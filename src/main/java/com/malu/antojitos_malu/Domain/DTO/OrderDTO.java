@@ -1,67 +1,55 @@
 package com.malu.antojitos_malu.Domain.DTO;
 
-import java.util.List;
-
 public class OrderDTO {
-  private int id;
+    private int id;
+    
+    private int idUser;
+    
+    private String date;
+    
+    private String total;
+    
+    private String status;
 
-  private int idUser;
+    // Getters and Setters
 
-  private String date;
+    public int getId() {
+      return id;
+    }
 
-  private String total;
+    public void setId(int id) {
+      this.id = id;
+    }
 
-  private String status;
+    public int getIdUser() {
+      return idUser;
+    }
 
-  private List<OrderProductDTO> orderProducts;
+    public void setIdUser(int idUser) {
+      this.idUser = idUser;
+    }
 
-  // Getters and Setters
+    public String getDate() {
+      return date;
+    }
 
-  public int getId() {
-    return id;
+    public void setDate(String date) {
+      this.date = date;
+    }
+
+    public String getTotal() {
+      return total;
+    }
+
+    public void setTotal(String total) {
+      this.total = total;
+    }
+
+    public String getStatus() {
+      return status;
+    }
+
+    public void setStatus(String status) {
+      this.status = status;
+    }
   }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public int getIdUser() {
-    return idUser;
-  }
-
-  public void setIdUser(int idUser) {
-    this.idUser = idUser;
-  }
-
-  public String getDate() {
-    return date;
-  }
-
-  public void setDate(String date) {
-    this.date = date;
-  }
-
-  public String getTotal() {
-    return total;
-  }
-
-  public void setTotal(String total) {
-    this.total = total;
-  }
-
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-  public List<OrderProductDTO> getOrderProducts() {
-    return orderProducts;
-  }
-
-  public void setOrderProducts(List<OrderProductDTO> orderProducts) {
-    this.orderProducts = orderProducts;
-  }
-}

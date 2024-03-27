@@ -3,6 +3,8 @@ package com.malu.antojitos_malu.Domain.DTO;
 public class BookingDTO {
   private int id;
 
+  private int userId;
+
   private String date;
   
   private int attendees;
@@ -15,6 +17,14 @@ public class BookingDTO {
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  public int getUserId() {
+    return userId;
+  }
+
+  public void setUserId(int userId) {
+    this.userId = userId;
   }
 
   public String getDate() {

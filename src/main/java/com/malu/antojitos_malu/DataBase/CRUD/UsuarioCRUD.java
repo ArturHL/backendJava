@@ -10,4 +10,6 @@ public interface UsuarioCRUD extends CrudRepository<Usuario, Integer>{
 
   Usuario findByIdUsuarios(int id);
 
+  Usuario findByCorreo(String correo);
+
 }

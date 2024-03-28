@@ -5,7 +5,7 @@ import java.util.Optional;
 import com.malu.antojitos_malu.Domain.DTO.ProductImgDTO;
 
 public interface ProductImgRepo {
-  Optional<ProductImgDTO> getImgByProductId(int id);
+  Optional<ProductImgDTO> getProductImgById(int id);
   ProductImgDTO save(ProductImgDTO productImgDTO);
   Optional<ProductImgDTO> deleteByProductId(int id);
   Optional<ProductImgDTO> updateByProductId(int id, ProductImgDTO productImgDTO);

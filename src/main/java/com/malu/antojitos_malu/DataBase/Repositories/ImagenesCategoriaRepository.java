@@ -1,31 +1,54 @@
 package com.malu.antojitos_malu.DataBase.Repositories;
 
-import com.malu.antojitos_malu.DataBase.CRUD.ImagenesCategoriaCRUD;
-
-import com.malu.antojitos_malu.DataBase.Entities.ImagenesCategoria;
-
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
+import com.malu.antojitos_malu.DataBase.CRUD.ImagenesCategoriaCRUD;
+import com.malu.antojitos_malu.DataBase.Entities.ImagenesCategoria;
+import com.malu.antojitos_malu.DataBase.Mappers.CategoryImgMapper;
+import com.malu.antojitos_malu.Domain.DTO.CategoryImgDTO;
+import com.malu.antojitos_malu.Domain.Repositories.CategoryImgRepo;
+
 @Repository
-public class ImagenesCategoriaRepository {
+public class ImagenesCategoriaRepository implements CategoryImgRepo{
   private ImagenesCategoriaCRUD imagenesCategoriaCRUD;
+  private CategoryImgMapper mapper;
 
-  public List<ImagenesCategoria> getAll(){
-    return (List<ImagenesCategoria>) imagenesCategoriaCRUD.findAll();
+  @Override
+  public Optional<CategoryImgDTO> getImgByCategoryId(int id){
+    Optional<ImagenesCategoria> imagenesCategoria = imagenesCategoriaCRUD.findById(id);
+    if (imagenesCategoria.isPresent()) {
+      return Optional.of(mapper.toCategoryImgDTO(imagenesCategoria.get()));
+    }
+    return Optional.empty();
   }
 
-  public ImagenesCategoria save(ImagenesCategoria imagenesCategoria){
-    return imagenesCategoriaCRUD.save(imagenesCategoria);
+  @Override
+  public CategoryImgDTO save(CategoryImgDTO categoryImgDTO){
+    ImagenesCategoria imagenesCategoria = mapper.toImagenesCategoria(categoryImgDTO);
+    ImagenesCategoria imagenesCategoriaSaved = imagenesCategoriaCRUD.save(imagenesCategoria);
+    return mapper.toCategoryImgDTO(imagenesCategoriaSaved);
   }
 
-  public void delete(ImagenesCategoria imagenesCategoria){
-    imagenesCategoriaCRUD.delete(imagenesCategoria);
+  @Override
+  public Optional<CategoryImgDTO> deleteByCategoryId(int id){
+    Optional<CategoryImgDTO> categoryImg = getImgByCategoryId(id);
+    if (categoryImg.isPresent()) {
+      imagenesCategoriaCRUD.deleteById(id);
+      return categoryImg;
+    }
+    return Optional.empty();
   }
 
-  public List<ImagenesCategoria> findByCategoriaId(int id){
-    return imagenesCategoriaCRUD.findByIdCategoria(id);
+  @Override
+  public Optional<CategoryImgDTO> updateByCategoryId(int id, CategoryImgDTO categoryImgDTO){
+    Optional<ImagenesCategoria> categoryImg = imagenesCategoriaCRUD.findById(id);
+    if (categoryImg.isPresent()) {
+      ImagenesCategoria categoryImgToUpdate = categoryImg.get();
+      categoryImgToUpdate.setUrl(categoryImgDTO.getUrl());
+      return Optional.of(mapper.toCategoryImgDTO(imagenesCategoriaCRUD.save(categoryImgToUpdate)));
+    }
+    return Optional.empty();
   }
-  
 }

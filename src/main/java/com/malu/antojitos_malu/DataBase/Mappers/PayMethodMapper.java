@@ -3,6 +3,9 @@ package com.malu.antojitos_malu.DataBase.Mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.Mapping;
+
+import java.util.List;
+
 import org.mapstruct.InheritInverseConfiguration;
 
 import com.malu.antojitos_malu.Domain.DTO.PayMethodDTO;
@@ -19,6 +22,7 @@ public interface PayMethodMapper {
     @Mapping(target = "cvv", source = "cvv"),
   })
   PayMethodDTO toPayMethodDTO(MetodoPago metodoPago);
+  List<PayMethodDTO> toPayMethodsDTOs(List<MetodoPago> metodosPago);
 
   @InheritInverseConfiguration
   MetodoPago toMetodoPago(PayMethodDTO payMethodDTO);

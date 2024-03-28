@@ -3,6 +3,9 @@ package com.malu.antojitos_malu.DataBase.Mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.Mapping;
+
+import java.util.List;
+
 import org.mapstruct.InheritInverseConfiguration;
 
 import com.malu.antojitos_malu.DataBase.Entities.Orden;
@@ -18,6 +21,7 @@ public interface OrderMapper {
     @Mapping(target = "status", source = "estatus"),
   })
   OrderDTO toOrderDTO(Orden orden);
+  List<OrderDTO> toOrdersDTOs(List<Orden> ordenes);
 
   @InheritInverseConfiguration
   Orden toOrden(OrderDTO orderDTO);

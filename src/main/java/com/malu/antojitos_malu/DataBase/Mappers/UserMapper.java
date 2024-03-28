@@ -1,5 +1,7 @@
 package com.malu.antojitos_malu.DataBase.Mappers;
 
+import java.util.List;
+
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
@@ -18,6 +20,7 @@ public interface UserMapper {
     @Mapping(target = "password", source = "contrasena"),
   })
   UserDTO toUserDTO(Usuario Usuario);
+  List<UserDTO> toUsersDTOs(List<Usuario> Usuarios);
 
   @InheritInverseConfiguration
   Usuario toUsuario(UserDTO userDTO);

@@ -1,5 +1,7 @@
 package com.malu.antojitos_malu.DataBase.Mappers;
 
+import java.util.List;
+
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
@@ -20,6 +22,7 @@ public interface AddressMapper {
     @Mapping(target = "state", source = "estado"),
   })
   AddressDTO toAddressDTO(Direccion direccion);
+  List<AddressDTO> toAddressesDTOs(List<Direccion> direcciones);
 
   @InheritInverseConfiguration
   Direccion toDireccion(AddressDTO addressDTO);

@@ -8,11 +8,14 @@ import com.malu.antojitos_malu.Domain.DTO.UserImgDTO;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ImagenesUsuarioRepository implements UserImgRepo{
+  @Autowired
   private ImagenesUsuarioCRUD imagenesUsuarioCRUD;
+  @Autowired
   private UserImgMapper mapper;
 
   @Override

@@ -9,11 +9,14 @@ import com.malu.antojitos_malu.Domain.DTO.PayMethodDTO;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MetodoPagoRepository implements PayMethodRepo {
+  @Autowired
   private MetodoPagoCRUD metodoPagoCRUD;
+  @Autowired
   private PayMethodMapper mapper;
 
   @Override

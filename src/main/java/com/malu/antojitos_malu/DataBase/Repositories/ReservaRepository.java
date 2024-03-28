@@ -9,11 +9,14 @@ import com.malu.antojitos_malu.Domain.DTO.BookingDTO;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ReservaRepository implements BookingRepo{
+  @Autowired
   private ReservaCRUD reservaCRUD;
+  @Autowired
   private BookingMapper mapper;
 
   @Override

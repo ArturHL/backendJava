@@ -1,5 +1,6 @@
 package com.malu.antojitos_malu.DataBase.Repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,7 +14,9 @@ import com.malu.antojitos_malu.DataBase.CRUD.DireccionCRUD;
 
 @Repository
 public class DireccionRepository implements AddressRepo{
+  @Autowired
   private DireccionCRUD direccionCRUD;
+  @Autowired
   private AddressMapper mapper;
 
   @Override

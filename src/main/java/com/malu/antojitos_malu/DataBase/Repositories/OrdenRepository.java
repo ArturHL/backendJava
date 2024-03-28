@@ -9,11 +9,14 @@ import com.malu.antojitos_malu.Domain.DTO.OrderDTO;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class OrdenRepository implements OrderRepo{
+  @Autowired
   private OrdenCRUD ordenCRUD;
+  @Autowired
   private OrderMapper mapper;
 
   @Override

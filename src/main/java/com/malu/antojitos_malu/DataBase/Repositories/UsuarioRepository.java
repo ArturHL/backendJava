@@ -9,11 +9,14 @@ import com.malu.antojitos_malu.DataBase.Mappers.UserMapper;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UsuarioRepository implements UserRepo{
+  @Autowired
   private UsuarioCRUD usuarioCRUD;
+  @Autowired
   private UserMapper mapper;
 
   @Override

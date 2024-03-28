@@ -10,11 +10,14 @@ import com.malu.antojitos_malu.Domain.Repositories.OrderProductRepo;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProductosOrdenRepository implements OrderProductRepo{
+  @Autowired
   private ProductosOrdenCRUD productosOrdenCRUD;
+  @Autowired
   private OrderProductMapper mapper;
 
   @Override

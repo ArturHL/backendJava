@@ -9,11 +9,14 @@ import com.malu.antojitos_malu.Domain.Repositories.ProductRepo;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProductoRepository implements ProductRepo{
+  @Autowired
   private ProductoCRUD productoCRUD;
+  @Autowired
   private ProductMapper mapper;
 
   @Override

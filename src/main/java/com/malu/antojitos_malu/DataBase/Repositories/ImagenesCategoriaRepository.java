@@ -1,5 +1,6 @@
 package com.malu.antojitos_malu.DataBase.Repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -12,7 +13,9 @@ import com.malu.antojitos_malu.Domain.Repositories.CategoryImgRepo;
 
 @Repository
 public class ImagenesCategoriaRepository implements CategoryImgRepo{
+  @Autowired
   private ImagenesCategoriaCRUD imagenesCategoriaCRUD;
+  @Autowired
   private CategoryImgMapper mapper;
 
   @Override

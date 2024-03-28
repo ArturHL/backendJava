@@ -8,11 +8,14 @@ import com.malu.antojitos_malu.DataBase.Mappers.ProductImgMapper;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ImagenesProductoRepository implements ProductImgRepo {
+  @Autowired
   private ImagenesProductoCRUD imagenesProductoCRUD;
+  @Autowired
   private ProductImgMapper mapper;  
 
   @Override

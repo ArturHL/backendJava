@@ -5,6 +5,7 @@ import com.malu.antojitos_malu.DataBase.CRUD.CategoriaCRUD;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.malu.antojitos_malu.DataBase.Entities.Categoria;
@@ -14,7 +15,9 @@ import com.malu.antojitos_malu.Domain.Repositories.CategoryRepo;
 
 @Repository
 public class CategoriaRepository implements CategoryRepo {
+  @Autowired
   private CategoriaCRUD categoriaCRUD;
+  @Autowired
   private CategoryMapper mapper;
 
   @Override

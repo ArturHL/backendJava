@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import com.malu.antojitos_malu.Domain.DTO.ProductDTO;
 import com.malu.antojitos_malu.Domain.Services.ProductService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
@@ -22,33 +24,39 @@ public class ProductController {
   private ProductService service;
 
   @GetMapping("/all")
-  public Optional<List<ProductDTO>> getAll(){
-    return service.getAll();
+  public ResponseEntity<List<ProductDTO>> getAll(){
+    return new ResponseEntity<>(service.getAll().get(), HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
-  public Optional<ProductDTO> getProductById(@PathVariable("id") int id){
-    return service.getProductById(id);
+  public ResponseEntity<ProductDTO> getProductById(@PathVariable("id") int id){
+    return service.getProductById(id)
+      .map(productDTO -> new ResponseEntity<>(productDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @GetMapping("/categoryId/{categoryId}")
-  public Optional<List<ProductDTO>> getByCategoryId(@PathVariable("categoryId") int categoryId){
-    return service.getByCategoryId(categoryId);
+  public ResponseEntity<List<ProductDTO>> getByCategoryId(@PathVariable("categoryId") int categoryId){
+    return new ResponseEntity<>(service.getByCategoryId(categoryId).get(), HttpStatus.OK);
   }
 
   @PostMapping("/save")
-  public ProductDTO save(@RequestBody ProductDTO productDTO){
-    return service.save(productDTO);
+  public ResponseEntity<ProductDTO> save(@RequestBody ProductDTO productDTO){
+    return new ResponseEntity<>(service.save(productDTO), HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{id}")
-  public Optional<ProductDTO> deleteById(@PathVariable("id") int id){
-    return service.deleteById(id);
+  public ResponseEntity<ProductDTO> deleteById(@PathVariable("id") int id){
+    return service.deleteById(id)
+      .map(productDTO -> new ResponseEntity<>(productDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PutMapping("/{id}")
-  public Optional<ProductDTO> updateById(@PathVariable("id") int id, @RequestBody ProductDTO productDTO){
-    return service.updateById(id, productDTO);
+  public ResponseEntity<ProductDTO> updateById(@PathVariable("id") int id, @RequestBody ProductDTO productDTO){
+    return service.updateById(id, productDTO)
+      .map(productDTO1 -> new ResponseEntity<>(productDTO1, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
 }

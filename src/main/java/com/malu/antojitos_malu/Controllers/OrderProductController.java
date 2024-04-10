@@ -1,6 +1,8 @@
 package com.malu.antojitos_malu.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +17,6 @@ import java.util.List;
 import com.malu.antojitos_malu.Domain.DTO.OrderProductDTO;
 
 import com.malu.antojitos_malu.Domain.Services.OrderProductService;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/orderProduct")
@@ -24,32 +25,38 @@ public class OrderProductController {
   private OrderProductService service;
 
   @GetMapping("/all")
-  public Optional<List<OrderProductDTO>> getAll(){
-    return service.getAll();
+  public ResponseEntity<List<OrderProductDTO>> getAll(){
+    return new ResponseEntity<>(service.getAll().get(), HttpStatus.OK);
   }
 
   @GetMapping("/orderId/{id}")
-  public Optional<List<OrderProductDTO>> getByOrderId(@PathVariable("id") int orderId){
-    return service.getByOrderId(orderId);
+  public ResponseEntity<List<OrderProductDTO>> getByOrderId(@PathVariable("id") int orderId){
+    return new ResponseEntity<>(service.getByOrderId(orderId).get(), HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
-  public Optional<OrderProductDTO> getOrderProductById(@PathVariable("id") int id){
-    return service.getOrderProductById(id);
+  public ResponseEntity<OrderProductDTO> getOrderProductById(@PathVariable("id") int id){
+    return service.getOrderProductById(id)
+      .map(orderProductDTO -> new ResponseEntity<>(orderProductDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PostMapping("/save")
-  public OrderProductDTO save(@RequestBody OrderProductDTO orderProductDTO){
-    return service.save(orderProductDTO);
+  public ResponseEntity<OrderProductDTO> save(@RequestBody OrderProductDTO orderProductDTO){
+    return new ResponseEntity<>(service.save(orderProductDTO), HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{id}")
-  public Optional<OrderProductDTO> deleteById(@PathVariable("id") int id){
-    return service.deleteById(id);
+  public ResponseEntity<OrderProductDTO> deleteById(@PathVariable("id") int id){
+    return service.deleteById(id)
+      .map(orderProductDTO -> new ResponseEntity<>(orderProductDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PutMapping("/{id}")
-  public Optional<OrderProductDTO> updateById(@PathVariable("id") int id, @RequestBody OrderProductDTO orderProductDTO){
-    return service.updateById(id, orderProductDTO);
+  public ResponseEntity<OrderProductDTO> updateById(@PathVariable("id") int id, @RequestBody OrderProductDTO orderProductDTO){
+    return service.updateById(id, orderProductDTO)
+      .map(orderProductDTO1 -> new ResponseEntity<>(orderProductDTO1, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 }

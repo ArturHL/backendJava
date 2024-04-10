@@ -1,6 +1,8 @@
 package com.malu.antojitos_malu.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +15,6 @@ import com.malu.antojitos_malu.Domain.DTO.PayMethodDTO;
 import com.malu.antojitos_malu.Domain.Services.PayMethodService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/payMethod")
@@ -22,32 +23,38 @@ public class PayMethodController {
   private PayMethodService service;
 
   @GetMapping("/all")
-  public Optional<List<PayMethodDTO>> getAll(){
-    return service.getAll();
+  public ResponseEntity<List<PayMethodDTO>> getAll(){
+    return new ResponseEntity<>(service.getAll().get(), HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
-  public Optional<PayMethodDTO> getPayMethodById(@PathVariable("id") int id){
-    return service.getPayMethodById(id);
+  public ResponseEntity<PayMethodDTO> getPayMethodById(@PathVariable("id") int id){
+    return service.getPayMethodById(id)
+      .map(payMethodDTO -> new ResponseEntity<>(payMethodDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @GetMapping("/userId/{userId}")
-  public Optional<List<PayMethodDTO>> getByUserId(@PathVariable("userId") int userId){
-    return service.getByUserId(userId);
+  public ResponseEntity<List<PayMethodDTO>> getByUserId(@PathVariable("userId") int userId){
+    return new ResponseEntity<>(service.getByUserId(userId).get(), HttpStatus.OK);
   }
 
   @PostMapping("/save")
-  public PayMethodDTO save(@RequestBody PayMethodDTO payMethodDTO){
-    return service.save(payMethodDTO);
+  public ResponseEntity<PayMethodDTO> save(@RequestBody PayMethodDTO payMethodDTO){
+    return new ResponseEntity<>(service.save(payMethodDTO), HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{id}")
-  public Optional<PayMethodDTO> deleteById(@PathVariable("id") int id){
-    return service.deleteById(id);
+  public ResponseEntity<PayMethodDTO> deleteById(@PathVariable("id") int id){
+    return service.deleteById(id)
+      .map(payMethodDTO -> new ResponseEntity<>(payMethodDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PutMapping("/{id}")
-  public Optional<PayMethodDTO> updateById(@PathVariable("id") int id, @RequestBody PayMethodDTO payMethodDTO){
-    return service.updateById(id, payMethodDTO);
+  public ResponseEntity<PayMethodDTO> updateById(@PathVariable("id") int id, @RequestBody PayMethodDTO payMethodDTO){
+    return service.updateById(id, payMethodDTO)
+      .map(payMethodDTO1 -> new ResponseEntity<>(payMethodDTO1, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 }

@@ -1,6 +1,8 @@
 package com.malu.antojitos_malu.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +15,6 @@ import com.malu.antojitos_malu.Domain.Services.BookingService;
 import com.malu.antojitos_malu.Domain.DTO.BookingDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/booking")
@@ -22,28 +23,32 @@ public class BookingController {
   private BookingService service;
 
   @GetMapping("/all")
-  public Optional<List<BookingDTO>> getAll(){
-    return service.getAll();
+  public ResponseEntity<List<BookingDTO>> getAll(){
+    return new ResponseEntity<>(service.getAll().get(), HttpStatus.OK);
   }
 
   @GetMapping("/{UserId}")
-  public Optional<List<BookingDTO>> getByUserId(@PathVariable("UserId")int UserId){
-    return service.getByUserId(UserId);
+  public ResponseEntity<List<BookingDTO>> getByUserId(@PathVariable("UserId")int UserId){
+    return new ResponseEntity<>(service.getByUserId(UserId).get(), HttpStatus.OK);
   }
 
   @PostMapping("/save")
-  public BookingDTO save(@RequestBody BookingDTO bookingDTO){
-    return service.save(bookingDTO);
+  public ResponseEntity<BookingDTO> save(@RequestBody BookingDTO bookingDTO){
+    return new ResponseEntity<>(service.save(bookingDTO), HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{id}")
-  public Optional<BookingDTO> deleteById(@PathVariable("id")int id){
-    return service.deleteById(id);
+  public ResponseEntity<BookingDTO> deleteById(@PathVariable("id")int id){
+    return service.deleteById(id)
+      .map(bookingDTO -> new ResponseEntity<>(bookingDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PutMapping("/{id}")
-  public Optional<BookingDTO> updateById(@PathVariable("id")int id, @RequestBody BookingDTO bookingDTO){
-    return service.updateById(id, bookingDTO);
+  public ResponseEntity<BookingDTO> updateById(@PathVariable("id")int id, @RequestBody BookingDTO bookingDTO){
+    return service.updateById(id, bookingDTO)
+      .map(bookingDTO1 -> new ResponseEntity<>(bookingDTO1, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
 }

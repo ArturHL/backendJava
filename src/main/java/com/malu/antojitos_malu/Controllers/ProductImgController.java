@@ -1,6 +1,7 @@
 package com.malu.antojitos_malu.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import com.malu.antojitos_malu.Domain.DTO.ProductImgDTO;
 import com.malu.antojitos_malu.Domain.Services.ProductImgService;
+import org.springframework.http.HttpStatus;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/productImg")
@@ -21,22 +22,26 @@ public class ProductImgController {
   private ProductImgService service;
 
   @GetMapping("/productId/{productId}")
-  public Optional<ProductImgDTO> getImgByProductId(@PathVariable("productId") int productId){
-    return service.getImgByProductId(productId);
+  public ResponseEntity<ProductImgDTO> getImgByProductId(@PathVariable("productId") int productId){
+    return new ResponseEntity<>(service.getImgByProductId(productId).get(), HttpStatus.OK);
   }
 
   @PostMapping("/save")
-  public ProductImgDTO save(@RequestBody ProductImgDTO productImgDTO){
-    return service.save(productImgDTO);
+  public ResponseEntity<ProductImgDTO> save(@RequestBody ProductImgDTO productImgDTO){
+    return new ResponseEntity<>(service.save(productImgDTO), HttpStatus.CREATED);
   }
 
   @DeleteMapping("/productId/{productId}")
-  public Optional<ProductImgDTO> deleteByProductId(@PathVariable("productId") int productId){
-    return service.deleteByProductId(productId);
+  public ResponseEntity<ProductImgDTO> deleteByProductId(@PathVariable("productId") int productId){
+    return service.deleteByProductId(productId)
+      .map(productImgDTO -> new ResponseEntity<>(productImgDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PutMapping("/productId/{productId}")
-  public Optional<ProductImgDTO> updateByProductId(@PathVariable("productId") int productId, @RequestBody ProductImgDTO productImgDTO){
-    return service.updateByProductId(productId, productImgDTO);
+  public ResponseEntity<ProductImgDTO> updateByProductId(@PathVariable("productId") int productId, @RequestBody ProductImgDTO productImgDTO){
+    return service.updateByProductId(productId, productImgDTO)
+      .map(productImgDTO1 -> new ResponseEntity<>(productImgDTO1, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 }

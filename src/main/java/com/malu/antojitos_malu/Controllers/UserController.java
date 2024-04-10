@@ -1,6 +1,7 @@
 package com.malu.antojitos_malu.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,9 +12,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import com.malu.antojitos_malu.Domain.DTO.UserDTO;
 import com.malu.antojitos_malu.Domain.Services.UserService;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -22,32 +23,40 @@ public class UserController {
   private UserService service;
 
   @GetMapping("/all")
-  public Optional<List<UserDTO>> getAll(){
-    return service.getAll();
+  public ResponseEntity<List<UserDTO>> getAll(){
+    return new ResponseEntity<>(service.getAll().get(), HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
-  public Optional<UserDTO> getUserById(@PathVariable("id") int id){
-    return service.getUserById(id);
+  public ResponseEntity<UserDTO> getUserById(@PathVariable("id") int id){
+    return service.getUserById(id)
+      .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PostMapping("/save")
-  public UserDTO save(@RequestBody UserDTO userDTO){
-    return service.save(userDTO);
+  public ResponseEntity<UserDTO> save(@RequestBody UserDTO userDTO){
+    return new ResponseEntity<>(service.save(userDTO), HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{id}")
-  public Optional<UserDTO> deleteById(@PathVariable("id") int id){
-    return service.deleteById(id);
+  public ResponseEntity<UserDTO> deleteById(@PathVariable("id") int id){
+    return service.deleteById(id)
+      .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PutMapping("/{id}")
-  public Optional<UserDTO> updateById(@PathVariable("id") int id, @RequestBody UserDTO userDTO){
-    return service.updateById(id, userDTO);
+  public ResponseEntity<UserDTO> updateById(@PathVariable("id") int id, @RequestBody UserDTO userDTO){
+    return service.updateById(id, userDTO)
+      .map(userDTO1 -> new ResponseEntity<>(userDTO1, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @GetMapping("/email/{email}")
-  public Optional<UserDTO> getUserByEmail(@PathVariable("email") String email){
-    return service.getUserByEmail(email);
+  public ResponseEntity<UserDTO> getUserByEmail(@PathVariable("email") String email){
+    return service.getUserByEmail(email)
+      .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 }

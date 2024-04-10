@@ -1,9 +1,10 @@
 package com.malu.antojitos_malu.Controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.malu.antojitos_malu.Domain.Services.AddressService;
 import com.malu.antojitos_malu.Domain.DTO.AddressDTO;
 
+
 @RestController
 @RequestMapping("/address")
 public class AddressController {
@@ -22,33 +24,39 @@ public class AddressController {
   private AddressService service;
 
   @GetMapping("/all")
-  public Optional<List<AddressDTO>> getAll(){
-    return service.getAll();
+  public ResponseEntity<List<AddressDTO>> getAll(){
+    return new ResponseEntity<>(service.getAll().get(), HttpStatus.OK);
   }
 
   @GetMapping("/{UserId}")
-  public Optional<List<AddressDTO>> getAllByUserId(@PathVariable("UserId")int UserId){
-    return service.getAllByUserId(UserId);
+  public ResponseEntity<List<AddressDTO>> getAllByUserId(@PathVariable("UserId")int UserId){
+    return new ResponseEntity<>(service.getAllByUserId(UserId).get(), HttpStatus.OK);
   }
 
   @GetMapping("/search/{id}")
-  public Optional<AddressDTO> getAddressById(@PathVariable("id")int id){
-    return service.getAddressById(id);
+  public ResponseEntity<AddressDTO> getAddressById(@PathVariable("id")int id){
+    return service.getAddressById(id)
+      .map(addressDTO -> new ResponseEntity<>(addressDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PostMapping("/save")
-  public AddressDTO save(@RequestBody AddressDTO addressDTO){
-    return service.save(addressDTO);
+  public ResponseEntity<AddressDTO> save(@RequestBody AddressDTO addressDTO){
+    return new ResponseEntity<>(service.save(addressDTO), HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{id}")
-  public Optional<AddressDTO> deleteById(@PathVariable("id")int id){
-    return service.deleteById(id);
+  public ResponseEntity<AddressDTO> deleteById(@PathVariable("id")int id){
+    return service.deleteById(id)
+      .map(addressDTO -> new ResponseEntity<>(addressDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PutMapping("/{id}")
-  public Optional<AddressDTO> updateById(@PathVariable("id")int id, @RequestBody AddressDTO addressDTO){
-    return service.updateById(id, addressDTO);
+  public ResponseEntity<AddressDTO> updateById(@PathVariable("id")int id, @RequestBody AddressDTO addressDTO){
+    return service.updateById(id, addressDTO)
+      .map(addressDTO1 -> new ResponseEntity<>(addressDTO1, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
 }

@@ -1,6 +1,8 @@
 package com.malu.antojitos_malu.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.malu.antojitos_malu.Domain.Services.OrderService;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
-import java.util.Optional;
 import java.util.List;
 
 @RestController
@@ -23,43 +24,53 @@ public class OrderController {
   private OrderService service;
 
   @GetMapping("/all")
-  public Optional<List<OrderDTO>> getAll() {
-    return service.getAll();
+  public ResponseEntity<List<OrderDTO>> getAll() {
+    return new ResponseEntity<>(service.getAll().get(), HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
-  public Optional<OrderDTO> getOrderById(@PathVariable("id")int id) {
-    return service.getOrderById(id);
+  public ResponseEntity<OrderDTO> getOrderById(@PathVariable("id")int id) {
+    return new ResponseEntity<>(service.getOrderById(id).get(), HttpStatus.OK);
   }
 
   @PostMapping("/save")
-  public OrderDTO save(@RequestBody OrderDTO orderDTO) {
-    return service.save(orderDTO);
+  public ResponseEntity<OrderDTO> save(@RequestBody OrderDTO orderDTO) {
+    return new ResponseEntity<>(service.save(orderDTO), HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{id}")
-  public Optional<OrderDTO> deleteById(@PathVariable("id")int id) {
-    return service.deleteById(id);
+  public ResponseEntity<OrderDTO> deleteById(@PathVariable("id")int id) {
+    return service.deleteById(id)
+      .map(orderDTO -> new ResponseEntity<>(orderDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @GetMapping("/user/{userId}")
-  public Optional<List<OrderDTO>> getByUserId(@PathVariable("userId")int userId) {
-    return service.getByUserId(userId);
+  public ResponseEntity<List<OrderDTO>> getByUserId(@PathVariable("userId")int userId) {
+    return service.getByUserId(userId)
+      .map(orderDTO -> new ResponseEntity<>(orderDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @GetMapping("/status/{status}")
-  public Optional<List<OrderDTO>> getByStatus(@PathVariable("status")String status) {
-    return service.getByStatus(status);
+  public ResponseEntity<List<OrderDTO>> getByStatus(@PathVariable("status")String status) {
+    return service.getByStatus(status)
+      .map(orderDTO -> new ResponseEntity<>(orderDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @GetMapping("/date/{date}")
-  public Optional<List<OrderDTO>> getByDate(@PathVariable("date")String date) {
-    return service.getByDate(date);
+  public ResponseEntity<List<OrderDTO>> getByDate(@PathVariable("date")String date) {
+    return service.getByDate(date)
+      .map(orderDTO -> new ResponseEntity<>(orderDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PutMapping("/status/{id}")
-  public Optional<OrderDTO> updateStatusById(@PathVariable("id")int id, @RequestBody OrderDTO orderDTO) {
-    return service.updateStatusById(id, orderDTO.getStatus());
+  public ResponseEntity<OrderDTO> updateStatusById(@PathVariable("id")int id, @RequestBody OrderDTO orderDTO) {
+    return service.updateStatusById(id, orderDTO.getStatus())
+      .map(orderDTO1 -> new ResponseEntity<>(orderDTO1, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
 }

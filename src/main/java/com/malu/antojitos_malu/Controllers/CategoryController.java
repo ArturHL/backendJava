@@ -1,6 +1,8 @@
 package com.malu.antojitos_malu.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.malu.antojitos_malu.Domain.Services.CategoryService;
@@ -14,8 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Optional;
-
 
 @RestController
 @RequestMapping("/category")
@@ -24,32 +24,40 @@ public class CategoryController {
   private CategoryService service;
 
   @GetMapping("/all")
-  public Optional<List<CategoryDTO>> getAll(){
-    return service.getAll();
+  public ResponseEntity<List<CategoryDTO>> getAll(){
+    return new ResponseEntity<>(service.getAll().get(), HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
-  public Optional<CategoryDTO> getCategoryById(@PathVariable("id")int id){
-    return service.getCategoryById(id);
+  public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable("id")int id){
+    return service.getCategoryById(id)
+      .map(categoryDTO -> new ResponseEntity<>(categoryDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @GetMapping("/name/{name}")
-  public Optional<CategoryDTO> getCategoryByName(@PathVariable("name")String name){
-    return service.getCategoryByName(name);
+  public ResponseEntity<CategoryDTO> getCategoryByName(@PathVariable("name")String name){
+    return service.getCategoryByName(name)
+      .map(categoryDTO -> new ResponseEntity<>(categoryDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PostMapping("/save")
-  public CategoryDTO save(@RequestBody CategoryDTO categoryDTO){
-    return service.save(categoryDTO);
+  public ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO categoryDTO){
+    return new ResponseEntity<>(service.save(categoryDTO), HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{id}")
-  public Optional<CategoryDTO> deleteById(@PathVariable("id")int id){
-    return service.deleteById(id);
+  public ResponseEntity<CategoryDTO> deleteById(@PathVariable("id")int id){
+    return service.deleteById(id)
+      .map(categoryDTO -> new ResponseEntity<>(categoryDTO, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PutMapping("/{id}")
-  public Optional<CategoryDTO> updateById(@PathVariable("id")int id, @RequestBody CategoryDTO categoryDTO){
-    return service.updateById(id, categoryDTO);
+  public ResponseEntity<CategoryDTO> updateById(@PathVariable("id")int id, @RequestBody CategoryDTO categoryDTO){
+    return service.updateById(id, categoryDTO)
+      .map(categoryDTO1 -> new ResponseEntity<>(categoryDTO1, HttpStatus.OK))
+      .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 }

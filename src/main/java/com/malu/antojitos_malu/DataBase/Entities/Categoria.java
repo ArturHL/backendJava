@@ -26,7 +26,7 @@ public class Categoria {
   @OneToMany(mappedBy = "categoriaImg")
   private List<ImagenesCategoria> imagenesCategoria;
 
-  @OneToMany(mappedBy = "categoria")
+  @OneToMany(mappedBy = "idCategoria")
   private List<Producto> productos;
 
   // Getters and Setters

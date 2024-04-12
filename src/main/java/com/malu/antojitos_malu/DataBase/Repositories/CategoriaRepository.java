@@ -29,9 +29,11 @@ public class CategoriaRepository implements CategoryRepo {
 
   @Override
   public Optional<CategoryDTO> getCategoryById(int id){
-    Categoria categoria = categoriaCRUD.findById(id).get();
-    CategoryDTO category = mapper.toCategoryDTO(categoria);
-    return Optional.of(category);
+    Optional<Categoria> categoria = categoriaCRUD.findById(id);
+    if (categoria.isPresent()) {
+      return Optional.of(mapper.toCategoryDTO(categoria.get()));
+    }
+    return Optional.empty();
   }
 
   @Override

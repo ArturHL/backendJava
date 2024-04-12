@@ -9,7 +9,7 @@ public class ProductDTO {
   
   private boolean available;
   
-  private String price;
+  private int price;
   
   // Getters and Setters
   public int getId() {
@@ -36,11 +36,11 @@ public class ProductDTO {
     this.available = available;
   }
 
-  public String getPrice() {
+  public int getPrice() {
     return price;
   }
 
-  public void setPrice(String price) {
+  public void setPrice(int price) {
     this.price = price;
   }
 

@@ -28,7 +28,7 @@ public class Producto {
 
   private Boolean existencias;
 
-  private String precio;
+  private Integer precio;
 
   // Relations
 
@@ -60,7 +60,7 @@ public class Producto {
     return existencias;
   }
 
-  public String getPrecio() {
+  public Integer getPrecio() {
     return precio;
   }
 
@@ -80,7 +80,7 @@ public class Producto {
     this.existencias = existencias;
   }
 
-  public void setPrecio(String precio) {
+  public void setPrecio(Integer precio) {
     this.precio = precio;
   }
 }

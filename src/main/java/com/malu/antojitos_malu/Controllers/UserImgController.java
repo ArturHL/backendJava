@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 
 
 @RestController
-@RequestMapping("/userImg")
+@RequestMapping("/userimg")
 public class UserImgController {
   @Autowired
   private UserImgService service;

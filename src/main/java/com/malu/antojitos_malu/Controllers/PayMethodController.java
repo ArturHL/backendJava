@@ -17,7 +17,7 @@ import com.malu.antojitos_malu.Domain.Services.PayMethodService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/payMethod")
+@RequestMapping("/paymethod")
 public class PayMethodController {
   @Autowired
   private PayMethodService service;

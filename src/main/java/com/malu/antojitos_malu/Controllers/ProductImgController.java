@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 
 
 @RestController
-@RequestMapping("/productImg")
+@RequestMapping("/productimg")
 public class ProductImgController {
   @Autowired
   private ProductImgService service;

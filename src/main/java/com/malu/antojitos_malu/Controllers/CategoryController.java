@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
   @Autowired
   private CategoryService service;
 
+  @CrossOrigin
   @GetMapping("/all")
   public ResponseEntity<List<CategoryDTO>> getAll(){
     return new ResponseEntity<>(service.getAll().get(), HttpStatus.OK);

@@ -18,6 +18,7 @@ public interface BookingMapper {
     @Mapping(target = "userId", source = "idUsuario"),
     @Mapping(target = "date", source = "fecha"),
     @Mapping(target = "attendees", source = "personasAsistentes"),
+    @Mapping(target = "bookingType", source = "tipoReserva")
   })
   BookingDTO toBookingDTO(Reserva reserva);
   List<BookingDTO> toBookingsDTOs(List<Reserva> reservas);

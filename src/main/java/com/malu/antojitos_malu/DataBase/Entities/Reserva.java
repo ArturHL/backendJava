@@ -1,5 +1,7 @@
 package com.malu.antojitos_malu.DataBase.Entities;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,10 +23,13 @@ public class Reserva {
   @Column(name = "id_usuario")
   private Integer idUsuario;
 
-  private String fecha;
+  private LocalDateTime fecha;
 
   @Column(name = "personas_asistentes")
   private Integer personasAsistentes;
+
+  @Column(name = "tipo_reserva")
+  private String tipoReserva;
 
   // Relations
 
@@ -50,12 +55,12 @@ public class Reserva {
     this.idUsuario = idUsuario;
   }
 
-  public String getFecha() {
+  public LocalDateTime getFecha() {
     return fecha;
   }
 
   public void setFecha(String fecha) {
-    this.fecha = fecha;
+    this.fecha = LocalDateTime.parse(fecha);
   }
 
   public Integer getPersonasAsistentes() {
@@ -64,5 +69,13 @@ public class Reserva {
 
   public void setPersonasAsistentes(Integer personasAsistentes) {
     this.personasAsistentes = personasAsistentes;
+  }
+
+  public String getTipoReserva() {
+    return tipoReserva;
+  }
+
+  public void setTipoReserva(String tipoReserva) {
+    this.tipoReserva = tipoReserva;
   }
 }

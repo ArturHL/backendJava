@@ -1,11 +1,17 @@
 package com.malu.antojitos_malu.DataBase.Entities;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 
@@ -26,7 +32,7 @@ public class MetodoPago {
   private String numero;
 
   @Column(name = "fecha_expiracion")
-  private String fechaExpiracion;
+  private LocalDate fechaExpiracion;
 
   private String cvv;
 
@@ -35,6 +41,9 @@ public class MetodoPago {
   @ManyToOne
   @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
   private Usuario usuarioMetodoPago;
+
+  @OneToMany(mappedBy = "metodoPagoOrden")
+  private List<Orden> metodoPagoOrdenes;
 
   // Getters and Setters
 
@@ -71,11 +80,21 @@ public class MetodoPago {
   }
 
   public String getFechaExpiracion() {
-    return fechaExpiracion;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    String fechaExpiracionString = fechaExpiracion.format(formatter);
+    return fechaExpiracionString;
   }
 
-  public void setFechaExpiracion(String fechaExpiracion) {
-    this.fechaExpiracion = fechaExpiracion;
+  public void setFechaExpiracion(String fechaExpiracionString) {
+    System.out.println(fechaExpiracionString);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+    try {
+      YearMonth fechaExpiracion = YearMonth.parse(fechaExpiracionString, formatter);
+      LocalDate fechaExpiracionDate = fechaExpiracion.atDay(1);
+      this.fechaExpiracion = fechaExpiracionDate;
+    } catch (Exception e) {
+      System.out.println(fechaExpiracionString);
+    }
   }
 
   public String getCvv() {

@@ -9,6 +9,8 @@ public class BookingDTO {
   
   private int attendees;
 
+  private String bookingType;
+
   // Getters and Setters
   
   public int getId() {
@@ -43,5 +45,12 @@ public class BookingDTO {
     this.attendees = attendees;
   }
 
+  public String getBookingType() {
+    return bookingType;
+  }
+
+  public void setBookingType(String bookingType) {
+    this.bookingType = bookingType;
+  }
   
 }

@@ -22,7 +22,7 @@ public class UserImgController {
   @Autowired
   private UserImgService service;
 
-  @GetMapping("/userId/{userId}")
+  @GetMapping("/{userId}")
   public ResponseEntity<UserImgDTO> getImgByUserId(@PathVariable("userId") int userId){
     return service.getImgByUserId(userId)
       .map(userImgDTO -> new ResponseEntity<>(userImgDTO, HttpStatus.OK))
@@ -34,14 +34,14 @@ public class UserImgController {
     return new ResponseEntity<>(service.save(userImgDTO), HttpStatus.CREATED);
   }
 
-  @DeleteMapping("/userId/{userId}")
+  @DeleteMapping("/{userId}")
   public ResponseEntity<UserImgDTO> deleteByUserId(@PathVariable("userId") int userId){
     return service.deleteByUserId(userId)
       .map(userImgDTO -> new ResponseEntity<>(userImgDTO, HttpStatus.OK))
       .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
-  @PutMapping("/userId/{userId}")
+  @PutMapping("/{userId}")
   public ResponseEntity<UserImgDTO> updateByUserId(@PathVariable("userId") int userId, @RequestBody UserImgDTO userImgDTO){
     return service.updateByUserId(userId, userImgDTO)
       .map(userImgDTO1 -> new ResponseEntity<>(userImgDTO1, HttpStatus.OK))

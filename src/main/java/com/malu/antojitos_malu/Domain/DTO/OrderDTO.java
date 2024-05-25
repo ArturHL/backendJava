@@ -11,6 +11,10 @@ public class OrderDTO {
     
     private String status;
 
+    private int addressId;
+
+    private int paymentMethodId;
+
     // Getters and Setters
 
     public int getId() {
@@ -51,5 +55,21 @@ public class OrderDTO {
 
     public void setStatus(String status) {
       this.status = status;
+    }
+
+    public int getAddressId() {
+      return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+      this.addressId = addressId;
+    }
+
+    public int getPaymentMethodId() {
+      return paymentMethodId;
+    }
+
+    public void setPaymentMethodId(int paymentMethodId) {
+      this.paymentMethodId = paymentMethodId;
     }
   }

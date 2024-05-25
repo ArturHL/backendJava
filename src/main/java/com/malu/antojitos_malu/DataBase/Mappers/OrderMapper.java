@@ -19,6 +19,8 @@ public interface OrderMapper {
     @Mapping(target = "date", source = "fecha"),
     @Mapping(target = "total", source = "total"),
     @Mapping(target = "status", source = "estatus"),
+    @Mapping(target = "addressId", source = "direccionId"),
+    @Mapping(target = "paymentMethodId", source = "metodoPagoId"),
   })
   OrderDTO toOrderDTO(Orden orden);
   List<OrderDTO> toOrdersDTOs(List<Orden> ordenes);

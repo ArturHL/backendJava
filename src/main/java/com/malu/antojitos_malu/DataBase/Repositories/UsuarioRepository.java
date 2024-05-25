@@ -54,9 +54,10 @@ public class UsuarioRepository implements UserRepo{
   public Optional<UserDTO> updateById(int id, UserDTO userDTO) {
     Optional<Usuario> usuario = usuarioCRUD.findById(id);
     if (usuario.isPresent()) {
-      Usuario usuarioToUpdate = usuario.get();
-      usuarioToUpdate.setIdUsuarios(id);
-      return Optional.of(mapper.toUserDTO(usuarioCRUD.save(usuarioToUpdate)));
+      Usuario usuario2 = mapper.toUsuario(userDTO);
+      usuario2.setIdUsuarios(id);
+      Usuario usuarioSaved = usuarioCRUD.save(usuario2);
+      return Optional.of(mapper.toUserDTO(usuarioSaved));
     }
     return Optional.empty();
   }

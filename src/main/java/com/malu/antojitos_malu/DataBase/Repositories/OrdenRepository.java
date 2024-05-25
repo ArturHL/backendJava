@@ -5,6 +5,9 @@ import com.malu.antojitos_malu.Domain.Repositories.OrderRepo;
 import com.malu.antojitos_malu.DataBase.Entities.Orden;
 import com.malu.antojitos_malu.DataBase.Mappers.OrderMapper;
 import com.malu.antojitos_malu.Domain.DTO.OrderDTO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,7 +69,14 @@ public class OrdenRepository implements OrderRepo{
 
   @Override
   public Optional<List<OrderDTO>> getByDate(String date){
-    List<Orden> ordenes = (List<Orden>) ordenCRUD.findByFecha(date);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date parsedDate = null;
+    try {
+      parsedDate = dateFormat.parse(date);
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    List<Orden> ordenes = (List<Orden>) ordenCRUD.findByFecha(parsedDate);
     List<OrderDTO> orders = mapper.toOrdersDTOs(ordenes);
     return Optional.of(orders);
   }

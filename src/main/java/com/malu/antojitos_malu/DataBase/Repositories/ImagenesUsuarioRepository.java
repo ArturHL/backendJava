@@ -20,7 +20,7 @@ public class ImagenesUsuarioRepository implements UserImgRepo{
 
   @Override
   public Optional<UserImgDTO> getImgByUserId(int id) {
-    Optional<ImagenesUsuario> imagen = imagenesUsuarioCRUD.findById(id);
+    Optional<ImagenesUsuario> imagen = imagenesUsuarioCRUD.findByIdUsuario(id);
     if (imagen.isPresent()) {
       return Optional.of(mapper.toUserImgDTO(imagen.get()));
     }

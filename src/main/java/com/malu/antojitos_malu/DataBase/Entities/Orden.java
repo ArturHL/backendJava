@@ -29,7 +29,7 @@ public class Orden {
 
   private Date fecha;
 
-  private String total;
+  private Integer total;
 
   private String estatus;
 
@@ -81,11 +81,11 @@ public class Orden {
     }
   }
 
-  public String getTotal() {
+  public Integer getTotal() {
     return total;
   }
 
-  public void setTotal(String total) {
+  public void setTotal(Integer total) {
     this.total = total;
   }
 

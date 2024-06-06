@@ -26,7 +26,7 @@ public class ProductosOrden {
 
   private String comentario;
 
-  private String unidades;
+  private Integer unidades;
 
   // Relations
 
@@ -71,11 +71,11 @@ public class ProductosOrden {
     this.comentario = comentario;
   }
 
-  public String getUnidades() {
+  public Integer getUnidades() {
     return unidades;
   }
 
-  public void setUnidades(String unidades) {
+  public void setUnidades(Integer unidades) {
     this.unidades = unidades;
   }
 }
